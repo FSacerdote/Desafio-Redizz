@@ -12,6 +12,7 @@ export default function Tela (){
     function handleClick(event){
         const { clientX, clientY } = event        
         setDotsList([...dotsList, {clientX, clientY}])
+        setRemovedDots([])
     }
 
     function handleClear(){
@@ -23,6 +24,11 @@ export default function Tela (){
         setRemovedDots([...removedDots, dotsList.pop()])
         setDotsList(dotsList)
     }
+
+    function handleRedo(){
+        setDotsList([...dotsList, removedDots.pop()])
+        setRemovedDots(removedDots)
+    }
     
     return(
         <PageContainer>
@@ -31,7 +37,7 @@ export default function Tela (){
             </ScreenContainer>
             <ButtonContainer>
                 <Undo onClick={handleUndo} disabled={dotsList.length === 0}> <IoArrowUndo/> Undo</Undo>
-                <Undo> <IoArrowRedo/> Redo</Undo>
+                <Undo onClick={handleRedo} disabled={removedDots.length === 0}> <IoArrowRedo/> Redo</Undo>
                 <Clear onClick={handleClear}> <BsEraser /> Clear</Clear>
             </ButtonContainer>
         </PageContainer>
