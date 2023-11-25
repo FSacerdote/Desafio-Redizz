@@ -2,9 +2,11 @@ import { useState } from "react"
 import styled from "styled-components"
 import { IoArrowRedo } from "react-icons/io5";
 import { IoArrowUndo } from "react-icons/io5";
+import { BsEraser } from "react-icons/bs";
 
 export default function Tela (){
     const [dotsList, setDotsList] = useState([])
+    const [removedDots, setRemovedDots] = useState([])
 
     
     function handleClick(event){
@@ -14,6 +16,12 @@ export default function Tela (){
 
     function handleClear(){
         setDotsList([])
+        setRemovedDots([])
+    }
+
+    function handleUndo(){
+        setRemovedDots([...removedDots, dotsList.pop()])
+        setDotsList(dotsList)
     }
     
     return(
@@ -22,9 +30,9 @@ export default function Tela (){
                 {dotsList.map((dot, index)=> <Dot key={index} style={{left: dot.clientX - 185, top: dot.clientY - 50}}></Dot>)}
             </ScreenContainer>
             <ButtonContainer>
-                <Undo> <IoArrowUndo /> Undo</Undo>
-                <Undo> <IoArrowRedo />Redo</Undo>
-                <Clear onClick={handleClear}>Clear</Clear>
+                <Undo onClick={handleUndo} disabled={dotsList.length === 0}> <IoArrowUndo/> Undo</Undo>
+                <Undo> <IoArrowRedo/> Redo</Undo>
+                <Clear onClick={handleClear}> <BsEraser /> Clear</Clear>
             </ButtonContainer>
         </PageContainer>
     )
@@ -45,6 +53,9 @@ const ScreenContainer = styled.div`
     width: 1500px;
     height: 800px;
     overflow: hidden;
+    &:hover{
+        cursor: pointer;
+    }
 `
 
 const Dot = styled.div`
@@ -60,24 +71,28 @@ const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     gap: 20px;
+    button{
+        height: 60px;
+        width: 120px;
+        background-color: #c891fc;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-size: 20px;
+        &:hover{
+            filter: brightness(0.9);
+            cursor: pointer;
+        }
+        &:disabled{
+            filter: brightness(0.9);
+        }
+    }
 `
 
 const Undo = styled.button`
     width: 120px;
-    height: 60px;
-    background-color: #c891fc;
-    border: none;
-    border-radius: 10px;
-    color: white;
-    font-size: 20px;
 `
 
 const Clear = styled.button`
-    width: 60px;
-    height: 60px;
-    background-color: #c891fc;
-    border: none;
-    border-radius: 10px;
-    color: white;
-    font-size: 20px;
+    width: 120px;
 `
