@@ -72,7 +72,7 @@ const Dot = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: blue;
+    background-color: #c891fc;
 `
 
 const ButtonContainer = styled.div`
@@ -94,7 +94,7 @@ const ButtonContainer = styled.div`
             cursor: pointer;
         }
         &:disabled{
-            filter: brightness(0.9);
+            filter: brightness(0.8);
         }
     }
 `
